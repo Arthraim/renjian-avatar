@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>tttttt</title>
+</head>
+<body>
+	<form id="find" action="/" method="post""> 
+        <div>
+        	{% if not screen_name %}
+		       <input type="text" name="content" id="find_i" />
+		    {% else %}
+		       <input type="text" name="content" id="find_i" value="{{ screen_name }}" />
+		    {% endif %} 
+            <input type="submit" value="获取头像" />
+        </div> 
+    </form> 
+	{% if not avatars %}
+	   
+	{% else %}
+	   {% for avatar in avatars %}
+	       <img src="{{ avatar }}"/>
+	   {% endfor %}
+	{% endif %}
+</body>
+</html>
