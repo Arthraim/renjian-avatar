@@ -2,8 +2,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>@{{ user.screen_name }}的人间网头像～</title>
+		{% if not user %}
+		<title>人间头像～</title>
+        {% else %}
+        <title>@{{ user.screen_name }}的人间头像～</title>
+        {% endif %}
         <link rel="stylesheet" href="/debugmedia/css/style.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/debugmedia/zoomer/zoomer.css" type="text/css" media="screen" />
         <!--[if ie]>
             <link rel="stylesheet" type="text/css" href="debugmedia/css/ie.css" />
         <![endif]-->
@@ -14,7 +19,15 @@
             }
         </script>
     </head>
-    <body><div id="supermini">
+    <body>
+    <script type="text/javascript" src="/debugmedia/zoomer/jquery.min.js"></script>
+	<script type="text/javascript" src="/debugmedia/zoomer/zoomer.js"></script> 
+	<script type="text/javascript">
+	$(document).ready(function(){
+	    $('ul.thumb li').Zoomer({speedView:200,speedRemove:400,altAnim:false,speedTitle:400,debug:false});
+	});
+	</script>
+    <div id="supermini">
         <div id="linkedlogo"><a href="http://www.ikDicht.be"><span>Home</span></a></div>
         <ul id="about">
             <li class="about-top">&nbsp;</li>
@@ -23,7 +36,7 @@
             {% else %}
             <li class="about">
             	<p>@<a href="http://renjian.com/{{ user.screen_name }}" target="_blank">{{ user.screen_name }}</a>的
-                    <a href="http://renjian.com/" target="_blank">人间网</a>头像～
+                    <a href="http://renjian.com/" target="_blank">人间</a>头像～
 			    </p>
 			</li>
             {% endif %}
@@ -34,13 +47,17 @@
 		<ul id="firstPost"> 
 			<li class="firstPost-top">&nbsp;</li> 
 			<li class="firstPost"> 
-			    <h2><a href="http://www.ikDicht.be/bedrogen/" rel="bookmark" title="Bedrogen">Bedrogen</a></h2> 
-				{% if not avatars %}
-	            {% else %}
-	            {% for avatar in avatars %}<img src="{{ avatar }}"/>{% endfor %}
-	            {% endif %}
+			    <h2><a href="http://www.ikDicht.be/bedrogen/" rel="bookmark" title="Bedrogen">Avatars</a></h2>
+				<!-- Zoomer begin -->
+				<ul class="thumb">
+                    {% for avatar in avatars %}
+			        <li><a href="#"><img src="{{ avatar }}" /></a></li>
+					{% endfor %}
+				</ul>
+				<div class="break"></div>
+				<!-- Zoomer end -->
 			</li> 
-			<li class="firstPost-bottom"><a href="http://www.ikDicht.be/bedrogen/#speak">Post a comment</a></li> 
+			<li class="firstPost-bottom"><a href="http://renjian.com/{{ user.screen_name }}">关注@{{ user.screen_name }}</a></li> 
         </ul>
 		{% else %}
 			{% if user %}
@@ -61,7 +78,7 @@
 			<li id="searchBox">
             {% else %}
             <li class="page_item" id="searchLink">
-            	<h3><a href="#" onclick="openSearch(); return false;">点我看看别人的～</a></h3>
+            	<h3><a href="#" onclick="openSearch(); return false;">点我重新输入，再去看看别人的吧～</a></h3>
 			</li>
             <li id="searchBox" style="display:none;"> 
             {% endif %} 
@@ -92,9 +109,8 @@
 			 | Powered by <a href="http://renjian.com/api.html" target="_blank">renjian API</a><br/>
 			Theme by <a href="http://www.unnerkrunt.de" title="Original draft by Patrick Behrend">unnerkrunt</a> and <a href="http://nocreativity.com" title="Final touch and finalization by Ronny  Welter">nocreativity</a>
 			</p> 
-        </div> 
+        </div>
 		
-		
-		
-    </div></body>
+	</div>
+	</body>
 </html>
