@@ -42,8 +42,8 @@ div#linkedLogo {
 div#supermini div#linkedlogo a{
 	display:block;
 	widows:400px;
-	height:150px;
-	background-image:url("images/hello-there.jpg");
+	height:20px;
+	/*background-image:url("images/hello-there.jpg");*/
 	/*background-color:#009;*/
 	background-position:center;
 	background-repeat:no-repeat;

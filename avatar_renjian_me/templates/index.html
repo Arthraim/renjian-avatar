@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>renjian-avatar</title>
-        <link rel="stylesheet" href="debugmedia/css/style.css" type="text/css" media="screen" />
+        <title>@{{ user.screen_name }}的人间网头像～</title>
+        <link rel="stylesheet" href="/debugmedia/css/style.css" type="text/css" media="screen" />
         <!--[if ie]>
             <link rel="stylesheet" type="text/css" href="debugmedia/css/ie.css" />
         <![endif]-->
@@ -18,36 +18,59 @@
         <div id="linkedlogo"><a href="http://www.ikDicht.be"><span>Home</span></a></div>
         <ul id="about">
             <li class="about-top">&nbsp;</li>
-            <li class="about"><p>在下面输入你的人间帐号名吧～</p></li>
+			{% if not user %}
+            <li class="about"><p>在下面输入你的<a href="http://renjian.com/" target="_blank">人间网</a>帐号名吧～</p></li>
+            {% else %}
+            <li class="about">
+            	<p>@<a href="http://renjian.com/{{ user.screen_name }}" target="_blank">{{ user.screen_name }}</a>的
+                    <a href="http://renjian.com/" target="_blank">人间网</a>头像～
+			    </p>
+			</li>
+            {% endif %}
             <li class="about-bottom">&nbsp;</li>
         </ul>
 		
-		{% if screen_name %}
+		{% if avatars %}
 		<ul id="firstPost"> 
 			<li class="firstPost-top">&nbsp;</li> 
 			<li class="firstPost"> 
 			    <h2><a href="http://www.ikDicht.be/bedrogen/" rel="bookmark" title="Bedrogen">Bedrogen</a></h2> 
+				{% if not avatars %}
+	            {% else %}
+	            {% for avatar in avatars %}<img src="{{ avatar }}"/>{% endfor %}
+	            {% endif %}
 			</li> 
 			<li class="firstPost-bottom"><a href="http://www.ikDicht.be/bedrogen/#speak">Post a comment</a></li> 
         </ul>
+		{% else %}
+			{% if user %}
+			<ul id="firstPost"> 
+	            <li class="firstPost-top">&nbsp;</li> 
+	            <li class="firstPost"> 
+	                <p>@<a href="http://renjian.com/{{ user.screen_name }}" target="_blank">{{ user.screen_name }}</a>还没有用过自己的头像…… 强烈鄙视之……</p>
+					<p><img src="http://renjian.com/images/buddy_icon/120x120.jpg"/></p> 
+	            </li> 
+	            <li class="firstPost-bottom"></li> 
+	        </ul>
+			{% endif %}
 		{% endif %}
 		
 		<ul id="oldentries"> 
             <!-- search -->
-			{% if not screen_name %}
+			{% if not user %}
 			<li id="searchBox">
             {% else %}
             <li class="page_item" id="searchLink">
-            	<h3><a href="#" onclick="openSearch(); return false;">换别人的看看</a></h3>
+            	<h3><a href="#" onclick="openSearch(); return false;">点我看看别人的～</a></h3>
 			</li>
             <li id="searchBox" style="display:none;"> 
             {% endif %} 
                 <form method="post" id="searchform" action="/"> 
 		            <div>
-		            	{% if not screen_name %}
+		            	{% if not user %}
 						<input type="text" name="content" id="s" size="30" />
 						{% else %}
-						<input type="text" name="content" id="s" size="30" value="{{ screen_name }}" />
+						<input type="text" name="content" id="s" size="30" value="{{ user.screen_name }}" />
 						{% endif %} 
 						<input type="submit" id="searchsubmit" value="GO" />
 		            </div> 
@@ -57,7 +80,7 @@
 			<!-- history -->
 			{% for ren in rens %}
             <li>
-                <span class="olddate">{{ ren.date|truncatewords:"1" }}</span> 
+                <span class="olddate">{{ ren.date|truncatewords:"2" }}</span> 
                 <h3><a href="http://renjian.com/{{ ren.user_name }}/">@{{ ren.user_name }}</a></h3> 
             </li> 
             {% endfor %}
@@ -72,9 +95,6 @@
         </div> 
 		
 		
-		{% if not avatars %}
-        {% else %}
-        {% for avatar in avatars %}<img src="{{ avatar }}"/>{% endfor %}
-        {% endif %}
+		
     </div></body>
 </html>

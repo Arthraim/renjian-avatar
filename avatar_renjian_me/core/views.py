@@ -9,7 +9,7 @@ def indexRequest(request):
     if request.method == 'POST':
         screen_name = request.POST.get('content').lstrip().rstrip()
         if not screen_name:
-            return HttpResponseRedirect('/error?message=要正确输入screen_name或者ID哦～')
+            return HttpResponseRedirect('/error?message=screen_name or id may be wrong.')
 
         rnjn_url = 'http://api.renjian.com/'
         user_url = rnjn_url + 'users/show.json?id=' + screen_name.encode('UTF-8')
@@ -22,15 +22,18 @@ def indexRequest(request):
             user_id = data['id']
             ren.user_id = user_id
             img_url = unicode(data['profile_image_url'])
-            img_url = img_url.replace('http://avatar.renjian.com/' + unicode(user_id) + '/120x120_', '')
-            img_url = img_url.replace('.jpg', '')
-            num = int(img_url)
+            if img_url == 'http://renjian.com/images/buddy_icon/120x120.jpg':
+                num = 0
+            else:
+                img_url = img_url.replace('http://avatar.renjian.com/' + unicode(user_id) + '/120x120_', '')
+                img_url = img_url.replace('.jpg', '')
+                num = int(img_url)
             ren.avatar_num = num
             ren.save()
         except urllib2.HTTPError, ex:
-            return HttpResponseRedirect('/error?message=API请求返回结果：' + unicode(ex.code))
+            return HttpResponseRedirect('/error?message=API request result: ' + unicode(ex.code))
         except ValueError, ex:
-            return HttpResponseRedirect('/error?message=用户 [' + screen_name + '] 可能并不存在！ (' + ex.message + ')')
+            return HttpResponseRedirect('/error?message=user [' + ren.user_name + '] data got error! (' + ex.message + ')')
         i = num
         avatars = []
         while i:
@@ -38,7 +41,7 @@ def indexRequest(request):
             i = i - 1
         rens = Renjianer.objects.order_by('-date')[0:5]
         render_var = {
-            'screen_name': data['screen_name'],
+            'user': data,
             'rens': rens,
             'avatars': avatars
         }
@@ -54,4 +57,9 @@ def indexRequest(request):
 
 
 def error(request):
-    return render_to_response('error.html', {'message': request.GET.get('message'),})
+    message = request.GET.get('message')
+    if message:
+        meesage = message.encode('UTF-8')
+    else:
+        message = None
+    return render_to_response('error.html', {'message': message})
