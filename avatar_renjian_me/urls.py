@@ -17,3 +17,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^debugmedia/(?P<path>.*)$', 'django.views.static.serve',
+            {'document_root': '/home/arthur/workspace/renjian-avatar/avatar_renjian_me/media'}),
+    )

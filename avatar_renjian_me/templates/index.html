@@ -1,26 +1,80 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>tttttt</title>
-</head>
-<body>
-	<form id="find" action="/" method="post""> 
-        <div>
-        	{% if not screen_name %}
-		       <input type="text" name="content" id="find_i" />
-		    {% else %}
-		       <input type="text" name="content" id="find_i" value="{{ screen_name }}" />
-		    {% endif %} 
-            <input type="submit" value="获取头像" />
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>renjian-avatar</title>
+        <link rel="stylesheet" href="debugmedia/css/style.css" type="text/css" media="screen" />
+        <!--[if ie]>
+            <link rel="stylesheet" type="text/css" href="debugmedia/css/ie.css" />
+        <![endif]-->
+        <script type="text/javascript">
+            function openSearch(){
+                document.getElementById("searchBox").style.display = "inline";
+                document.getElementById("searchLink").style.display = "none";
+            }
+        </script>
+    </head>
+    <body><div id="supermini">
+        <div id="linkedlogo"><a href="http://www.ikDicht.be"><span>Home</span></a></div>
+        <ul id="about">
+            <li class="about-top">&nbsp;</li>
+            <li class="about"><p>在下面输入你的人间帐号名吧～</p></li>
+            <li class="about-bottom">&nbsp;</li>
+        </ul>
+		
+		{% if screen_name %}
+		<ul id="firstPost"> 
+			<li class="firstPost-top">&nbsp;</li> 
+			<li class="firstPost"> 
+			    <h2><a href="http://www.ikDicht.be/bedrogen/" rel="bookmark" title="Bedrogen">Bedrogen</a></h2> 
+			</li> 
+			<li class="firstPost-bottom"><a href="http://www.ikDicht.be/bedrogen/#speak">Post a comment</a></li> 
+        </ul>
+		{% endif %}
+		
+		<ul id="oldentries"> 
+            <!-- search -->
+			{% if not screen_name %}
+			<li id="searchBox">
+            {% else %}
+            <li class="page_item" id="searchLink">
+            	<h3><a href="#" onclick="openSearch(); return false;">换别人的看看</a></h3>
+			</li>
+            <li id="searchBox" style="display:none;"> 
+            {% endif %} 
+                <form method="post" id="searchform" action="/"> 
+		            <div>
+		            	{% if not screen_name %}
+						<input type="text" name="content" id="s" size="30" />
+						{% else %}
+						<input type="text" name="content" id="s" size="30" value="{{ screen_name }}" />
+						{% endif %} 
+						<input type="submit" id="searchsubmit" value="GO" />
+		            </div> 
+		        </form> 
+		    </li>
+			<hr class="no" />
+			<!-- history -->
+			{% for ren in rens %}
+            <li>
+                <span class="olddate">{{ ren.date|truncatewords:"1" }}</span> 
+                <h3><a href="http://renjian.com/{{ ren.user_name }}/">@{{ ren.user_name }}</a></h3> 
+            </li> 
+            {% endfor %}
+        </ul> 
+		 
+		
+		<div id="footer">
+            <p><br/>Produced by <a href="http://arthraim.cn/" target="_blank">Arthraim.cn</a>
+			 | Powered by <a href="http://renjian.com/api.html" target="_blank">renjian API</a><br/>
+			Theme by <a href="http://www.unnerkrunt.de" title="Original draft by Patrick Behrend">unnerkrunt</a> and <a href="http://nocreativity.com" title="Final touch and finalization by Ronny  Welter">nocreativity</a>
+			</p> 
         </div> 
-    </form> 
-	{% if not avatars %}
-	   
-	{% else %}
-	   {% for avatar in avatars %}
-	       <img src="{{ avatar }}"/>
-	   {% endfor %}
-	{% endif %}
-</body>
+		
+		
+		{% if not avatars %}
+        {% else %}
+        {% for avatar in avatars %}<img src="{{ avatar }}"/>{% endfor %}
+        {% endif %}
+    </div></body>
 </html>

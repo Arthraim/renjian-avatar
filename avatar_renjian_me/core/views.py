@@ -36,10 +36,21 @@ def indexRequest(request):
         while i:
             avatars.append('http://avatar.renjian.com/' + unicode(user_id) + '/120x120_' + unicode(i) + '.jpg')
             i = i - 1
-        return render_to_response('index.html', {'screen_name': data['screen_name'], 'avatars': avatars})
+        rens = Renjianer.objects.order_by('-date')[0:5]
+        render_var = {
+            'screen_name': data['screen_name'],
+            'rens': rens,
+            'avatars': avatars
+        }
+        return render_to_response('index.html', render_var)
 
     elif request.method == 'GET':
-        return render_to_response('index.html', {'avatars': None})
+        rens = Renjianer.objects.order_by('-date')[0:5]
+        render_var = {
+            'rens': rens,
+            'avatars': None
+        }
+        return render_to_response('index.html', render_var)
 
 
 def error(request):
