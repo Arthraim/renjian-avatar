@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # Example:
     (r'^$', 'avatar_renjian_me.core.views.indexRequest'),
     (r'^error/$', 'avatar_renjian_me.core.views.error'),
+    (r'^history/$', 'avatar_renjian_me.core.views.history'),
     
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:

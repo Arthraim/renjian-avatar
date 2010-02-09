@@ -2,29 +2,39 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>error occured</title>
+        <title>人间头像使用历史～</title>
         <link rel="stylesheet" href="/debugmedia/css/style.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="/debugmedia/zoomer/zoomer.css" type="text/css" media="screen" />
         <!--[if ie]>
-            <link rel="stylesheet" type="text/css" href="/debugmedia/css/ie.css" />
+            <link rel="stylesheet" type="text/css" href="debugmedia/css/ie.css" />
         <![endif]-->
     </head>
-    <body><div id="supermini">
+    <body>
+    <script type="text/javascript" src="/debugmedia/zoomer/jquery.min.js"></script>
+    <script type="text/javascript" src="/debugmedia/zoomer/zoomer.js"></script> 
+    <div id="supermini">
         <div id="linkedlogo"><a href="http://www.ikDicht.be"><span>Home</span></a></div>
         <ul id="about">
             <li class="about-top">&nbsp;</li>
-            {% if not message %}
-            <li class="about"><p>未知错误。</p></li>
-            {% else %}
-            <li class="about"><p>发生错误：{{ message }}</p></li>
-            {% endif %}
+            <li class="about">
+                <p>有{{ num }}位小盆友来过…… 总共查询了{{ visitnum }}次</p>
+            </li>
             <li class="about-bottom">&nbsp;</li>
         </ul>
         
-        <ul id="oldentries"> 
-            <li class="page_item">
-                <h3>请到人间网联系@<a href="http://renjian.com/arthraim">Arthraim</a>，或者发送Email到<a href="arthur@renjian.com">arthur@renjian.com</a></h3>
+        <ul id="oldentries">
+		    <li class="page_item">
+                <p><a href="/"><< 返回</a></p>
             </li>
-            <li class="page_item">
+            <!-- history -->
+            {% for ren in rens %}
+            <li>
+                <span class="olddate">{{ ren.date|truncatewords:"2" }}</span> 
+                <h3><a href="http://renjian.com/{{ ren.user_name }}/">@{{ ren.user_name }}</a></h3> 
+            </li> 
+            {% endfor %}
+			
+			<li class="page_item">
                 <p><a href="/"><< 返回</a></p>
             </li>
         </ul> 
@@ -34,11 +44,8 @@
              | Powered by <a href="http://renjian.com/api.html" target="_blank">renjian API</a><br/>
             Theme by <a href="http://www.unnerkrunt.de" title="Original draft by Patrick Behrend">unnerkrunt</a> and <a href="http://nocreativity.com" title="Final touch and finalization by Ronny  Welter">nocreativity</a>
             </p> 
-        </div> 
+        </div>
         
-        {% if not avatars %}
-        {% else %}
-        {% for avatar in avatars %}<img src="{{ avatar }}"/>{% endfor %}
-        {% endif %}
-    </div></body>
+    </div>
+    </body>
 </html>

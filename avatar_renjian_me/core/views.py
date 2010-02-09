@@ -3,7 +3,8 @@ import urllib2
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils import simplejson
-from core.models import Renjianer 
+from django.db.models import Count
+from core.models import Renjianer
 
 def indexRequest(request):
     if request.method == 'POST':
@@ -59,7 +60,15 @@ def indexRequest(request):
 def error(request):
     message = request.GET.get('message')
     if message:
-        meesage = message.encode('UTF-8')
+        message = message.encode('UTF-8')
     else:
         message = None
     return render_to_response('error.html', {'message': message})
+
+def history(request):
+    myQ = Renjianer.objects.order_by('-date')
+    cpQ = Renjianer.objects.all()
+    cpQ.query.group_by = ['user_name']
+    usernum = cpQ.__len__()
+    visitnum = myQ.__len__()
+    return render_to_response('history.html', {'num': usernum, 'visitnum': visitnum, 'rens': myQ})
