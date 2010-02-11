@@ -17,14 +17,14 @@
         <ul id="about">
             <li class="about-top">&nbsp;</li>
             <li class="about">
-                <p>有{{ num }}位小盆友来过…… 总共查询了{{ visitnum }}次</p>
+                <p>有{{ usernum }}位小盆友来过，共查询了{{ visitnum }}次，本页显示第{{ p_itempos }}-{{ p_itemnum }}个结果</p>
             </li>
             <li class="about-bottom">&nbsp;</li>
         </ul>
         
         <ul id="oldentries">
 		    <li class="page_item">
-                <p><a href="/"><< 返回</a></p>
+                <p><a href="/"><< 返回首页</a></p>
             </li>
             <!-- history -->
             {% for ren in rens %}
@@ -34,8 +34,18 @@
             </li> 
             {% endfor %}
 			
-			<li class="page_item">
-                <p><a href="/"><< 返回</a></p>
+			<li class="page_item olddate_big">
+	            <p class=""> 
+					{% if newer %}
+	                <a href="/history?p={{ newer }}">< 之后的</a>
+					{% endif %}
+					{% if newer and older %}
+					 | 
+					{% endif %}
+					{% if older %}
+	                <a href="/history?p={{ older }}">之前的 ></a>
+					{% endif %}
+				</p>
             </li>
         </ul> 
          

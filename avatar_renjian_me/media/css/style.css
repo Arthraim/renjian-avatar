@@ -290,6 +290,13 @@ ul#oldentries li {
 	padding-top: 2px;
 	text-align: right;
 }
+.olddate_big {
+    color: #888888;
+    float:right;
+    font: 12px 'Tahoma', 'Arial', Sans-Serif;
+    padding-top: 2px;
+    text-align: right;
+}
 h3 {
 	font: 12px 'Tahoma', 'Arial', Sans-Serif;
 }
