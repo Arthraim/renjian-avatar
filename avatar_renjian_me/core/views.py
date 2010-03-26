@@ -5,11 +5,13 @@ from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.db.models import Count
 from core.models import Renjianer
+from django.core.context_processors import request
 
 def indexRequest(request):
     if request.method == 'GET':
         rens = Renjianer.objects.order_by('-date')[0:5]
         render_var = {
+            'host': request.get_host(),
             'rens': rens,
             'avatars': None
         }
@@ -51,6 +53,7 @@ def getAvatars(request):
             i = i - 1
         rens = Renjianer.objects.order_by('-date')[0:5]
         render_var = {
+            'host': request.get_host(),
             'user': data,
             'rens': rens,
             'avatars': avatars
@@ -103,6 +106,7 @@ def history(request):
     usernum = userQ.__len__()
     
     template_parameters = {
+        'host': request.get_host(),
         'newer': newer,
         'older': older,
         'visitnum': visitnum,

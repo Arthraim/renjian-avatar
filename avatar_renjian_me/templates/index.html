@@ -47,7 +47,12 @@
         <ul id="firstPost"> 
             <li class="firstPost-top">&nbsp;</li> 
             <li class="firstPost"> 
-                <h2><a href="http://www.ikDicht.be/bedrogen/" rel="bookmark" title="Bedrogen">Avatars</a></h2>
+                <h2>
+                <a href="http://www.renjian.com/outside/share_link.xhtml?link=http://{{ host }}/avatars/?user={{ user.screen_name }}" 
+                   target="_blank" 
+                   title="让你在人间网的朋友们也能看到你用过些什么头像～">分享到人间</a>
+                <img src="http://www.renjian.com/images/tools/images/share-icon-1.gif" />
+                </h2>
                 <!-- Zoomer begin -->
                 <ul class="thumb">
                     {% for avatar in avatars %}
