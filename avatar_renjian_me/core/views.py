@@ -7,8 +7,17 @@ from django.db.models import Count
 from core.models import Renjianer
 
 def indexRequest(request):
-    if request.method == 'POST':
-        screen_name = request.POST.get('content').lstrip().rstrip()
+    if request.method == 'GET':
+        rens = Renjianer.objects.order_by('-date')[0:5]
+        render_var = {
+            'rens': rens,
+            'avatars': None
+        }
+        return render_to_response('index.html', render_var)
+
+def getAvatars(request):
+    if request.method == 'GET':
+        screen_name = request.GET.get('user')
         if not screen_name:
             return HttpResponseRedirect('/error?message=screen_name or id may be wrong.')
 
@@ -47,15 +56,13 @@ def indexRequest(request):
             'avatars': avatars
         }
         return render_to_response('index.html', render_var)
-
-    elif request.method == 'GET':
-        rens = Renjianer.objects.order_by('-date')[0:5]
-        render_var = {
-            'rens': rens,
-            'avatars': None
-        }
-        return render_to_response('index.html', render_var)
-
+    
+def postName(request):
+    if request.method == 'POST':
+        screen_name = request.POST.get('content').lstrip().rstrip()
+        if not screen_name:
+            return HttpResponseRedirect('/error?message=screen_name or id may be wrong.')
+        return HttpResponseRedirect('/avatars?user=' + screen_name);
 
 def error(request):
     message = request.GET.get('message')

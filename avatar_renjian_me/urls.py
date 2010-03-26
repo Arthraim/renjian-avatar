@@ -8,6 +8,8 @@ from django.conf import settings
 urlpatterns = patterns('',
     # Example:
     (r'^$', 'avatar_renjian_me.core.views.indexRequest'),
+    (r'^post_name/$', 'avatar_renjian_me.core.views.postName'),
+    (r'^avatars/$', 'avatar_renjian_me.core.views.getAvatars'),
     (r'^error/$', 'avatar_renjian_me.core.views.error'),
     (r'^history/$', 'avatar_renjian_me.core.views.history'),
     
