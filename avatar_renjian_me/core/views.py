@@ -9,6 +9,9 @@ from django.core.context_processors import request
 
 def indexRequest(request):
     if request.method == 'GET':
+        # select * from ( select * from core_renjianer order by date desc) t group by user_name;
+        # NEXT LINE GONNA BE WORKED IN NEW DJANGO
+        # rens = Renjianer.objects.raw('select * from ( select * from core_renjianer order by date desc) t group by user_name')[0:5]
         rens = Renjianer.objects.order_by('-date')[0:5]
         render_var = {
             'host': request.get_host(),
