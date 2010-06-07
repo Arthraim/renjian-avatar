@@ -4,8 +4,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.utils import simplejson
 from django.db.models import Count
-from core.models import Renjianer
+from avatar_renjian_me.core.models import Renjianer
 from django.core.context_processors import request
+from django.utils.encoding import iri_to_uri
 
 def indexRequest(request):
     if request.method == 'GET':
@@ -68,7 +69,7 @@ def postName(request):
         screen_name = request.POST.get('content').lstrip().rstrip()
         if not screen_name:
             return HttpResponseRedirect('/error?message=screen_name or id may be wrong.')
-        return HttpResponseRedirect('/avatars?user=' + screen_name);
+        return HttpResponseRedirect(iri_to_uri('/avatars?user=' + screen_name));
 
 def error(request):
     message = request.GET.get('message')
